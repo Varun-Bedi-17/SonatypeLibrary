@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 android {
     namespace 'com.example.library'
@@ -39,3 +41,81 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'io.github.Varun-Bedi-17'
+                artifactId = 'Library'
+                version = '1.0'
+            }
+        }
+    }
+}
+/*
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+artifacts {
+    archives javadocJar, sourcesJar
+}
+signing {
+    sign configurations.archives
+}
+afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId 'io.github.Varun-Bedi-17'
+                artifactId 'Library'
+                version '1.0'
+                if (project.plugins.findPlugin("com.android.library")) {
+                    from components.release
+                } else {
+                    from components.java
+                }
+                pom {
+                    name 'Library'
+                    description 'Desc'
+                    url 'https://github.com/Varun-Bedi-17/SonatypeLibrary'
+                    licenses {
+                        license {
+                            name 'MIT License'
+                            url 'http://www.opensource.org/licenses/mit-license.php'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'Varun'
+                            name 'Varun Bedi'
+                            email 'varunbedi02@gmail.com'
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                url "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                credentials {
+                    username "${sonatypeUsername}"
+                    password "${sonatypePassword}"
+                }
+            }
+        }
+    }
+}
+*/
+
+
+
